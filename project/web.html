@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Maldives Vacation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(to bottom, #e3f2fd 0%, #ffffff 100%);
+        }
+
+        header {
+            background: linear-gradient(135deg, #0077be 0%, #00a8e8 100%);
+            color: white;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        #template-link {
+            display: inline-block;
+            background: white;
+            color: #0077be;
+            padding: 12px 24px;
+            margin-top: 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        #template-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: #f0f8ff;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .interactive-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 5px solid #00a8e8;
+        }
+
+        .interactive-section h2 {
+            color: #0077be;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .interactive-section input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #00a8e8;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .interactive-section button {
+            background: linear-gradient(135deg, #0077be 0%, #00a8e8 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,119,190,0.3);
+        }
+
+        #response-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e3f2fd;
+            border-radius: 8px;
+            color: #0077be;
+            font-weight: bold;
+            display: none;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        .content-section img {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section img:hover {
+            transform: scale(1.02);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0077be 0%, #00a8e8 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+            margin: 10% auto;
+            padding: 2.5rem;
+            border: none;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideDown 0.4s ease;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            color: #0077be;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .modal-content p {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #0077be 0%, #00a8e8 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,119,190,0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                padding: 2rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Maldives Vacation</h1>
+        <p>An unforgettable tropical paradise experience</p>
+        <a href="https://freewebsitetemplates.com/" target="_blank" id="template-link">Original template — freewebsitetemplates.com</a>
+    </header>
+
+    <main>
+        <div class="interactive-section">
+            <h2>Share Your Favorite Activity!</h2>
+            <p>What's your favorite thing to do in the Maldives?</p>
+            <input type="text" id="activity-input" placeholder="e.g., snorkeling, diving, beach walks...">
+            <button onclick="showActivity()">Tell Me!</button>
+            <div id="response-message"></div>
+        </div>
+
+        <div class="content-section">
+            <p>I've always dreamed of visiting a tropical paradise. The Maldives kept showing up in my travel research with its stunning turquoise waters and white sand beaches. After months of saving and planning, I finally booked a week-long trip to this amazing island nation. I chose the Maldives because I wanted a place to completely disconnect from the stress of daily life and immerse myself in natural beauty. The promise of clear water, vibrant marine life, and peaceful surroundings was exactly what I needed.</p>
+
+            <img src="images/maldives1.jpg" alt="Maldives beach - palm trees">
+
+            <p>I stayed at a pleasant mid-range resort called Maafushi Palm Beach that struck a nice balance between comfort and authenticity. The resort featured beautiful overwater bungalows and beach villas, but I chose a beach villa only steps from the ocean. Each morning, I woke up to the sound of gentle waves and walked barefoot on the soft white sand. The water was so clear that I could see colorful fish swimming near the shore even without snorkeling gear. I spent hours floating in the warm ocean, watching the palm trees sway in the breeze.</p>
+
+            <img src="images/maldives2.jpg" alt="Crystal clear water in Maldives">
+
+            <p>The sunsets in the Maldives are truly magical. Every evening, the sky transforms into bright shades of orange, pink, and purple, perfectly reflecting on the calm water. One evening, I took a traditional dhoni boat ride. Watching the sun dip below the horizon from the middle of the Indian Ocean was breathtaking. The snorkeling was incredible as well. I saw sea turtles, manta rays, and hundreds of tropical fish in their natural habitat. The resort's fresh seafood was amazing, especially the grilled fish caught that same day.</p>
+
+            <img src="images/maldives3.jpg" alt="Sunset over Maldives">
+
+            <p>What really got to me was how chill and empty it felt. Even though I was at a resort with other folks, the beaches were huge, so I often felt like I had my own secret spot. I also didn't think I'd see any bioluminescent plankton. One night, I walked on the beach, and the water glowed blue every time I moved. It was like a movie scene. But the best part was early morning snorkeling when I saw a big sea turtle swimming through a coral reef. We looked at each other for a sec, and it felt like a real moment with nature.</p>
+
+            <img src="images/maldives4.jpg" alt="Snorkeling in Maldives">
+
+            <p>Okay, so this one time on the trip, I tried to get this cool shot of me walking into the ocean, right? Well, a tiny wave just wiped me out! I was soaked, and my phone barely made it in its case. This resort guy saw the whole thing and was cracking up, but he helped me up and even took the photo again for me. It just reminded me to chill out and have fun. Later that day, he invited me to a beach barbecue with the resort staff, and I got to hear all these cool stories about living on the island and the Maldivian culture.</p>
+
+            <img src="images/maldives5.jpg" alt="Overwater bungalow in Maldives">
+
+            <p>Flying back home, I knew I'd be back to the Maldives someday. The simple, beautiful island life just sticks with you. Next time, I want to see more of the local islands, try diving with whale sharks, and maybe stay in one of those overwater bungalows you always see. The Maldives isn't just a place to visit – it reminds you how beautiful our planet is and how important it is to protect these amazing places. Until I go back, I'll be dreaming of those clear waters and blue skies.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Nabila Nusrat Zaman</strong></p>
+        <p>Student ID: 25224540</p>
+    </footer>
+
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome!</h2>
+            <p>Welcome to my Maldives trip page!</p>
+            <p>Name: Nabila Nusrat Zaman</p>
+            <p>Student ID: 25224540</p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Welcome modal - appears on page load
+        window.onload = function() {
+            const modal = document.getElementById('welcome-modal');
+            modal.style.display = 'block';
+        };
+
+        function closeModal() {
+            const modal = document.getElementById('welcome-modal');
+            modal.style.display = 'none';
+        }
+
+        // Interactive activity function
+        function showActivity() {
+            const input = document.getElementById('activity-input');
+            const responseDiv = document.getElementById('response-message');
+            const activity = input.value.trim();
+
+            if (activity === '') {
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = 'Please enter an activity first!';
+                responseDiv.style.background = '#ffebee';
+                responseDiv.style.color = '#c62828';
+                return;
+            }
+
+            const responses = [
+                `Nice! I love ${activity} too! It's one of the best things about the Maldives.`,
+                `${activity.charAt(0).toUpperCase() + activity.slice(1)} sounds amazing! I had such a great time doing that.`,
+                `Great choice! ${activity.charAt(0).toUpperCase() + activity.slice(1)} in the Maldives is absolutely unforgettable.`,
+                `Oh yes! ${activity.charAt(0).toUpperCase() + activity.slice(1)} was one of my favorite activities too!`,
+                `I completely agree! ${activity.charAt(0).toUpperCase() + activity.slice(1)} is the perfect way to enjoy the islands.`
+            ];
+
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
+            responseDiv.style.display = 'block';
+            responseDiv.textContent = randomResponse;
+            responseDiv.style.background = '#e3f2fd';
+            responseDiv.style.color = '#0077be';
+
+            input.value = '';
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('activity-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                showActivity();
+            }
+        });
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('welcome-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+
+</body>
+</html>
